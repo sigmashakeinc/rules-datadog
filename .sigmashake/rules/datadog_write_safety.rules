@@ -6,7 +6,7 @@ rule datadog-block-unsafe-patterns {
   priority 90
   severity error
   DENY write
-  IF path GLOB "**/*" AND content CONTAINS "UNSAFE_datadog_PATTERN"
+  IF path GLOB "**/*" AND content CONTAINS "DD_API_KEY"
   MESSAGE "Blocked an unsafe pattern in datadog. Use the recommended best practices for 2025/2026."
 }
 
@@ -14,7 +14,7 @@ rule datadog-force-updated-api {
   enabled true
   priority 80
   severity warning
-  ASK write
-  IF path GLOB "**/*" AND content CONTAINS "OLD_datadog_API"
+  LOG write
+  IF path GLOB "**/*" AND content CONTAINS "datadog-agent"
   MESSAGE "You are using an outdated API for datadog. Please upgrade to the newer API."
 }
